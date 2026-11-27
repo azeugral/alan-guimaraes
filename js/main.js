@@ -2,22 +2,18 @@
   var d = document;
   var WA = '5542999785113';
 
-  /* ---------- hero: o esboço do polvo vira o mural pintado (MP4 em loop; versão 4:5 no celular em pé) ---------- */
-  var hero = d.querySelector('.hero'), v = d.querySelector('.h-vid');
+  /* ---------- hero: a peça do quadro troca a cada 4,3 s com uma cortina de baixo para cima ---------- */
   var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var cel = window.matchMedia('(max-width:860px) and (min-height:521px)');
-  function fonte() {
-    var n = cel.matches ? 'cel' : 'pc';
-    v.poster = 'img/hero/' + n + '.webp';
-    if (reduz) return;
-    if (v.dataset.n === n) return;
-    v.dataset.n = n; v.src = 'img/hero/' + n + '.mp4';
-    var p = v.play(); if (p && p.catch) p.catch(function () {});
+  var tela = d.getElementById('tela'), quadros = [].slice.call(tela.querySelectorAll('img')), leg = d.getElementById('hero-peca'), qi = 0;
+  quadros.forEach(function (q) { q.decode && q.decode().catch(function () {}); });
+  function troca() {
+    if (d.hidden) return;
+    var velha = quadros[qi]; qi = (qi + 1) % quadros.length; var nova = quadros[qi];
+    nova.classList.add('entra'); leg.classList.add('muda');
+    setTimeout(function () { leg.textContent = nova.dataset.leg; leg.classList.remove('muda'); }, 450);
+    setTimeout(function () { velha.classList.remove('on'); nova.classList.remove('entra'); nova.classList.add('on'); }, 1150);
   }
-  fonte();
-  cel.addEventListener ? cel.addEventListener('change', fonte) : cel.addListener(fonte);
-  d.addEventListener('visibilitychange', function () { if (!d.hidden && !reduz) v.play().catch(function () {}); });
-  requestAnimationFrame(function () { hero.classList.add('pronto'); });
+  if (!reduz) setInterval(troca, 4300);
 
   /* ---------- topo e gaveta ---------- */
   var topo = d.getElementById('topo'), gav = d.getElementById('gaveta'), burger = d.getElementById('burger');
