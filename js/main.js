@@ -13,7 +13,9 @@
     setTimeout(function () { leg.textContent = nova.dataset.leg; leg.classList.remove('muda'); }, 450);
     setTimeout(function () { velha.classList.remove('on'); nova.classList.remove('entra'); nova.classList.add('on'); }, 1150);
   }
-  if (!reduz) setInterval(troca, 4300);
+  function legenda(img) { leg.classList.add('muda'); setTimeout(function () { leg.textContent = img.dataset.leg; leg.classList.remove('muda'); }, 450); }
+  /* tinta do Veríssimo (WebGL); sem WebGL, cai na cortina */
+  if (!reduz && !(window.tinta && window.tinta(tela, legenda))) setInterval(troca, 4300);
 
   /* ---------- topo e gaveta ---------- */
   var topo = d.getElementById('topo'), gav = d.getElementById('gaveta'), burger = d.getElementById('burger');

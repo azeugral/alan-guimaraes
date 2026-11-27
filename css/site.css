@@ -72,6 +72,7 @@ p{margin:0;text-wrap:pretty}
 .tela img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
 .tela img.on{opacity:1;z-index:1}
 .tela img.entra{opacity:1;z-index:2;animation:cortina 1.05s var(--ease) both}
+.tela canvas{position:absolute;inset:0;width:100%;height:100%;z-index:3;display:block}
 .hero-peca{margin-top:calc(var(--q) * .045 + 2px);font:500 13.5px/1.2 var(--sans);white-space:nowrap;color:#3b3a36;transition:opacity .35s var(--ease)}
 .hero-peca.muda{opacity:0}
 .nome{margin-top:clamp(18px,3svh,30px);font-size:clamp(48px,min(7.8vw,11svh),124px);line-height:.95;letter-spacing:.02em;padding-left:.02em;white-space:nowrap;opacity:0;transform:translateY(.2em);animation:sobe .8s var(--ease) .25s forwards}
@@ -98,10 +99,13 @@ section[id]{scroll-margin-top:56px}
 .grade{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.5vw,20px);max-width:1280px;margin:0 auto}
 .item{margin:0;cursor:zoom-in;outline:none}
 .item.sai{display:none}
-.fr{position:relative;overflow:hidden;background:#0b0b0a;border:1px solid var(--linha)}
-.fr img{width:100%;aspect-ratio:4/5;object-fit:cover;-webkit-user-drag:none;transition:transform .5s var(--ease),filter .3s var(--ease)}
-.item:hover .fr img,.item:focus-visible .fr img{transform:scale(1.03);filter:brightness(1.06)}
-.item:focus-visible .fr{border-color:var(--cor)}
+/* moldura: passe-partout claro igual ao quadro do hero, em todas as artes */
+.fr{position:relative;padding:4.5%;background:#ebe8e1;box-shadow:0 0 0 1px rgba(0,0,0,.45),0 26px 40px -26px #000;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.fr::after{content:"";position:absolute;inset:4.5%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),inset 0 2px 6px rgba(0,0,0,.25);pointer-events:none}
+.fr img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:#2a2a27;-webkit-user-drag:none;transition:filter .3s var(--ease)}
+.item:hover .fr,.item:focus-visible .fr{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(0,0,0,.45),0 34px 46px -26px #000}
+.item:hover .fr img,.item:focus-visible .fr img{filter:brightness(1.06)}
+.item:focus-visible .fr{outline:2px solid var(--cor);outline-offset:4px}
 .mais-wrap{display:flex;justify-content:center;margin-top:34px}
 
 /* piercing e paredes */
@@ -119,7 +123,7 @@ section[id]{scroll-margin-top:56px}
 
 /* sobre */
 .sobre{display:grid;grid-template-columns:minmax(0,440px) minmax(0,520px);gap:clamp(32px,6vw,90px);justify-content:center;align-items:center;max-width:1100px;margin:0 auto}
-.sobre-foto{border:1px solid var(--linha)}
+.sobre-foto{display:block;width:100%;height:auto;padding:4.5%;background:#ebe8e1;box-shadow:0 0 0 1px rgba(0,0,0,.45),0 30px 50px -28px #000}
 .sobre-txt h2{margin-bottom:24px}
 .sobre-txt p{color:var(--apoio);margin-bottom:16px}
 .sobre-txt p:first-of-type{color:var(--osso);font-size:19px}
@@ -169,7 +173,7 @@ section[id]{scroll-margin-top:56px}
 /* lightbox */
 .lb{position:fixed;inset:0;z-index:40;background:rgba(12,12,11,.97);display:flex;align-items:center;justify-content:center;padding:64px 70px 24px}
 .lb figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:16px;max-height:100%}
-.lb img{max-height:calc(100svh - 180px);max-width:min(92vw,1000px);width:auto;object-fit:contain;border:1px solid var(--linha)}
+.lb img{max-height:calc(100svh - 180px);max-width:min(92vw,1000px);width:auto;object-fit:contain;padding:clamp(10px,2.2vmin,22px);background:#ebe8e1;box-shadow:0 0 0 1px rgba(0,0,0,.45),0 40px 70px -34px #000}
 .lb figcaption{display:flex;flex-direction:column;align-items:center;gap:12px;font:600 24px/1 var(--tit);text-transform:uppercase;letter-spacing:.03em;text-align:center}
 .lb-x{position:absolute;top:16px;right:var(--g);background:none;border:0;color:var(--osso);font:500 14px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:12px}
 .lb-n{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;background:none;border:1px solid var(--linha);color:var(--osso);font:600 28px/1 var(--tit);cursor:pointer;transition:border-color .3s var(--ease)}
@@ -201,7 +205,7 @@ section[id]{scroll-margin-top:56px}
   .orn-canto{width:64vw;opacity:.05}
   .orn-canto.orn-e{left:-30vw}.orn-canto.orn-d{right:-30vw}
   .orn-titulo{width:56vw;opacity:.06}
-  .grade,.pcs{gap:10px}
+  .grade,.pcs{gap:14px}
   .grade{grid-template-columns:1fr 1fr}
   .murais{grid-template-columns:1fr;max-width:420px}
   .pcs figcaption,.murais figcaption{font-size:19px}
